@@ -1,12 +1,15 @@
-import './App.css';
-import Scene from './components/Scene';
+import './App.scss';
+import AllInterface from './components/Interface/AllInterface/AllInterface';
+import Scene from './components/Scene/Scene';
 
 const App = () => {
     return (
-        <>
-            <h1>Grand Gradient</h1>
-            <Scene />
-        </>
+        <div className="all_container">
+            <div className="scene_container">
+                <Scene />
+            </div>
+            <AllInterface />
+        </div>
     );
 };
 

@@ -1,0 +1,19 @@
+@font-face {
+    font-family: Bold;
+    src: url('Tupo-Vyaz_Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: Regular;
+    src: url('Tupo-Vyaz_Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: Thin;
+    src: url('Tupo-Vyaz_Thin.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: VF;
+    src: url('Tupo-Vyaz_VF.ttf') format('truetype');
+}

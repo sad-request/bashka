@@ -1,0 +1,15 @@
+@mixin Bold {
+    font-family: 'Bold', serif;
+}
+
+@mixin Regular {
+    font-family: 'Regular', serif;
+}
+
+@mixin Thin {
+    font-family: 'Thin', serif;
+}
+
+@mixin WF {
+    font-family: 'VF', serif;
+}
