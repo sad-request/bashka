@@ -9,8 +9,8 @@ const Scene = () => {
         <div className={s.canvas}>
             <Canvas camera={{ fov: 12, position: [0, 0, 12] }} flat linear>
                 <Suspense fallback={null}>
-                    <pointLight position={[10, 10, 10]} />
-                    <pointLight position={[-10, -10, 10]} intensity={0.2} />
+                    <pointLight position={[3, 5, 3]} intensity={1} />
+                    {/* <pointLight position={[-10, -10, 10]} intensity={0.2} /> */}
                     {/* <ChosenItem /> */}
                     <Bashka />
                 </Suspense>
