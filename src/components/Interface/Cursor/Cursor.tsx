@@ -19,7 +19,6 @@ const Cursor = () => {
             gsap.to(mouseRef.current, { scale: 3, ease: 'power3.out' });
         }
     }, [pos, isMovedIn]);
-    console.log(isMovedIn);
 
     return <div className={s.cursor} ref={mouseRef}></div>;
 };
