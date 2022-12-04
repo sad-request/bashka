@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useGLTF } from '@react-three/drei';
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -6,6 +6,10 @@ import bashka from '../../models/bashka.gltf';
 import textureImage from '../../models/textures/rock-basecolor.png';
 import normalImage from '../../models/textures/NormalMap.png';
 import { Vector2 } from 'three';
+import { gsap } from 'gsap';
+import { lerp } from '../../utils';
+import { throttle } from 'underscore';
+import { useFrame } from '@react-three/fiber';
 
 type GLTFResult = GLTF & {
     nodes: {
@@ -14,6 +18,16 @@ type GLTFResult = GLTF & {
     materials: { [key: string]: THREE.Material };
 };
 const Bashka = () => {
+    const bashkaRef = useRef<THREE.Group>(null!);
+
+    useFrame(() => {
+        if (bashkaRef.current.position.y < -1.3) {
+            bashkaRef.current.position.y = bashkaRef.current.position.y + 0.02;
+            bashkaRef.current.rotation.y =
+                bashkaRef.current.rotation.y + Math.PI / 33;
+        }
+    });
+
     const texture = new THREE.TextureLoader().load(textureImage);
     const normal = new THREE.TextureLoader().load(normalImage);
     // normal.repeat.set(2, 1);
@@ -26,25 +40,39 @@ const Bashka = () => {
     // });
 
     const material = new THREE.MeshStandardMaterial();
-
     const { nodes } = useGLTF(bashka) as GLTFResult;
     // console.log();
 
+    // const xSet = gsap.quickSetter(bashkaRef, 'x', 'px');
+    // const ySet = gsap.quickSetter(bashkaRef, 'y', 'px');
     const [pos, setPos] = useState({ x: 0, y: 0 });
     document.addEventListener('mousemove', (e) => {
-        setPos({ x: e.pageX / 100 - 5, y: e.pageY / 100 - 5 });
+        setPos((prevState) => ({
+            x: e.x - prevState.x,
+            y: e.y - prevState.y,
+        }));
     });
-    console.log(pos);
+
+    useEffect(() => {
+        if (pos.x <= 35 && pos.y <= 20) {
+            // console.log(pos);
+        }
+
+        return () => {};
+    }, [pos.x, pos.y]);
+
+    // console.log(pos);
 
     return (
         <group
-            position={[0.7, -1.3, 0]}
-            // rotation={[0, -Math.PI / 5, 0]}
-            rotation={[
-                (pos.y * Math.PI) / 30 + Math.PI * 2,
-                (pos.x * Math.PI) / 30 + Math.PI * 2,
-                0,
-            ]}
+            ref={bashkaRef}
+            position={[0.7, -4, 0]}
+            // rotation={[
+            //     (pos.y * Math.PI) / 30 + Math.PI * 2,
+            //     (pos.x * Math.PI) / 30 + Math.PI * 2,
+            //     0,
+            // ]}
+            rotation={[0, -Math.PI / 5, 0]}
             scale={[1, 1, 1]}
         >
             {nodes.Scene.children.map((child) => (

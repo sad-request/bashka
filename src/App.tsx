@@ -1,5 +1,6 @@
 import './App.scss';
 import AllInterface from './components/Interface/AllInterface/AllInterface';
+import Cursor from './components/Interface/Cursor/Cursor';
 import Scene from './components/Scene/Scene';
 
 const App = () => {
@@ -8,6 +9,7 @@ const App = () => {
             <div className="scene_container">
                 <Scene />
             </div>
+            <Cursor />
             <AllInterface />
         </div>
     );

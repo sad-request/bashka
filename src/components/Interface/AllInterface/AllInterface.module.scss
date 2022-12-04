@@ -26,6 +26,7 @@
 }
 
 .logo_container {
+    overflow: hidden;
     display: flex;
     flex-direction: row;
     justify-content: start;
@@ -41,9 +42,9 @@
     gap: 16px;
 }
 
-// .logo {
-//     height: 1fr;
-// }
+.overflow_hidden {
+    overflow: hidden;
+}
 
 .text {
     font-family: serif;
