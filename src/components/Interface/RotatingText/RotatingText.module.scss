@@ -34,3 +34,12 @@
     -o-animation: rotating 80s linear infinite;
     animation: rotating 80s linear infinite;
 }
+
+.rotatingItem {
+    width: 150vw;
+    -webkit-animation: rotating 80s linear infinite;
+    -moz-animation: rotating 80s linear infinite;
+    -ms-animation: rotating 80s linear infinite;
+    -o-animation: rotating 80s linear infinite;
+    animation: rotating 80s linear infinite;
+}

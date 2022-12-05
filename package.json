@@ -25,6 +25,7 @@
     "three": "^0.146.0",
     "typescript": "^4.9.3",
     "underscore": "^1.13.6",
+    "valtio": "^1.7.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

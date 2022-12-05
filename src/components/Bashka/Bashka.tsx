@@ -10,6 +10,8 @@ import { gsap } from 'gsap';
 import { lerp } from '../../utils';
 import { throttle } from 'underscore';
 import { useFrame } from '@react-three/fiber';
+import { useSnapshot } from 'valtio';
+import state from '../../state';
 
 type GLTFResult = GLTF & {
     nodes: {
@@ -19,6 +21,7 @@ type GLTFResult = GLTF & {
 };
 const Bashka = () => {
     const bashkaRef = useRef<THREE.Group>(null!);
+    const snap = useSnapshot(state);
 
     useFrame(() => {
         if (bashkaRef.current.position.y < -1.3) {
@@ -26,7 +29,25 @@ const Bashka = () => {
             bashkaRef.current.rotation.y =
                 bashkaRef.current.rotation.y + Math.PI / 33;
         }
+        if (snap.rotatingCircleClicked && bashkaRef.current.position.y < -0.5) {
+            bashkaRef.current.position.y = bashkaRef.current.position.y + 0.04;
+            bashkaRef.current.position.x = bashkaRef.current.position.x + 0.02;
+            bashkaRef.current.scale.x = bashkaRef.current.scale.x + 0.015;
+            bashkaRef.current.scale.y = bashkaRef.current.scale.y + 0.015;
+            bashkaRef.current.scale.z = bashkaRef.current.scale.z + 0.015;
+        }
     });
+    // let scaleXX = 1;
+    // useEffect(() => {
+    //     if (snap.rotatingCircleClicked) {
+    //         gsap.to(bashkaRef.current, {
+    //             scaleXX: '2',
+    //             duration: '2',
+    //             ease: 'easeOut',
+    //         });
+    //     }
+    //     console.log(bashkaRef.current);
+    // }, [snap.rotatingCircleClicked]);
 
     const texture = new THREE.TextureLoader().load(textureImage);
     const normal = new THREE.TextureLoader().load(normalImage);
@@ -41,10 +62,6 @@ const Bashka = () => {
 
     const material = new THREE.MeshStandardMaterial();
     const { nodes } = useGLTF(bashka) as GLTFResult;
-    // console.log();
-
-    // const xSet = gsap.quickSetter(bashkaRef, 'x', 'px');
-    // const ySet = gsap.quickSetter(bashkaRef, 'y', 'px');
     const [pos, setPos] = useState({ x: 0, y: 0 });
     document.addEventListener('mousemove', (e) => {
         setPos((prevState) => ({

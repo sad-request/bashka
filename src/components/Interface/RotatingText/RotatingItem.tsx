@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import s from './RotatingText.module.scss';
-import { ReactComponent as Rotating } from '../../../icons/rotatingText.svg';
+import { ReactComponent as Rotating } from '../../../icons/chooseCardCircle.svg';
 import gsap from 'gsap';
 import state from '../../../state';
 import { useSnapshot } from 'valtio';
 
-const RotatingText = () => {
+const RotatingItem = () => {
     const snap = useSnapshot(state);
 
     const firstCircle = useRef(null);
@@ -13,7 +13,7 @@ const RotatingText = () => {
     return (
         <>
             <Rotating
-                className={s.rotating}
+                className={s.rotatingItem}
                 ref={firstCircle}
                 onClick={() =>
                     (state.rotatingCircleClicked = !state.rotatingCircleClicked)
@@ -23,4 +23,4 @@ const RotatingText = () => {
     );
 };
 
-export default RotatingText;
+export default RotatingItem;

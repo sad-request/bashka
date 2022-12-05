@@ -5,6 +5,9 @@ import { ReactComponent as LogoBashka } from '../../../icons/logoBashka.svg';
 import RotatingText from '../RotatingText/RotatingText';
 import gsap from 'gsap';
 import Cursor from '../Cursor/Cursor';
+import { useSnapshot } from 'valtio';
+import state from '../../../state';
+import RotatingItem from '../RotatingText/RotatingItem';
 
 const AllInterface = () => {
     const rotationAnim = useRef(null);
@@ -12,6 +15,9 @@ const AllInterface = () => {
     const linkAnim = useRef(null);
     const linkProjectAnim = useRef(null);
     const textAnim = useRef(null);
+    const rotationItemAnim = useRef(null);
+
+    const snap = useSnapshot(state);
 
     useEffect(() => {
         gsap.from(rotationAnim.current, {
@@ -48,6 +54,60 @@ const AllInterface = () => {
         });
     }, [window.onload]);
 
+    useEffect(() => {
+        console.log(snap.rotatingCircleClicked);
+        if (snap.rotatingCircleClicked) {
+            gsap.to(logoAnim.current, {
+                y: '-100',
+                x: '-132',
+                scale: '0.4',
+                duration: '0.75',
+                ease: 'power3.out',
+            });
+            gsap.to(rotationAnim.current, {
+                y: '650',
+                rotate: '-100deg',
+                delay: '0.2',
+                duration: '2',
+                ease: 'power3.out',
+            });
+            gsap.to(textAnim.current, {
+                // y: '500',
+                opacity: '0',
+                delay: '0.2',
+                duration: '1',
+                ease: 'power3.out',
+            });
+            gsap.to(linkAnim.current, {
+                y: '100',
+                delay: '0.2',
+                duration: '1.6',
+                ease: 'power3.out',
+            });
+            gsap.to(linkProjectAnim.current, {
+                y: '100',
+                delay: '0.3',
+                duration: '1.6',
+                ease: 'power3.out',
+            });
+            gsap.fromTo(
+                rotationItemAnim.current,
+                {
+                    // x: '-800',
+                    rotate: '-50deg',
+                },
+                {
+                    y: '-2500',
+                    // x: '0',
+                    rotate: '0deg',
+                    delay: '0.7',
+                    duration: '2.3',
+                    ease: 'power2.out',
+                }
+            );
+        }
+    }, [snap.rotatingCircleClicked]);
+
     return (
         <div className={s.main_grid}>
             <div className={s.content_block}>
@@ -76,6 +136,9 @@ const AllInterface = () => {
             </div>
             <div className={s.rotation} ref={rotationAnim}>
                 <RotatingText />
+            </div>
+            <div className={s.rotationItem} ref={rotationItemAnim}>
+                <RotatingItem />
             </div>
         </div>
     );

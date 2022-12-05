@@ -25,6 +25,15 @@
     margin-top: -100px;
 }
 
+.rotationItem {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+    margin-top: 2000px;
+    left: 100px;
+}
+
 .logo_container {
     overflow: hidden;
     display: flex;
