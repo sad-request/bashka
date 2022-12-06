@@ -7,11 +7,13 @@ import textureImage from '../../models/textures/rock-basecolor.png';
 import normalImage from '../../models/textures/NormalMap.png';
 import { Vector2 } from 'three';
 import { gsap } from 'gsap';
-import { lerp } from '../../utils';
-import { throttle } from 'underscore';
+import { lerp, mapInterval } from '../../utils';
+import _, { throttle } from 'underscore';
 import { useFrame } from '@react-three/fiber';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
+import { a } from '@react-spring/three';
+import { useSpring, config } from 'react-spring';
 
 type GLTFResult = GLTF & {
     nodes: {
@@ -19,35 +21,42 @@ type GLTFResult = GLTF & {
     };
     materials: { [key: string]: THREE.Material };
 };
+
+type BashkaSpring = {
+    x: number;
+    y: number;
+    z: number;
+    rotationx: number;
+    rotationy: number;
+    rotationz: number;
+    scalex: number;
+    scaley: number;
+    scalez: number;
+};
+
 const Bashka = () => {
     const bashkaRef = useRef<THREE.Group>(null!);
     const snap = useSnapshot(state);
 
-    useFrame(() => {
-        if (bashkaRef.current.position.y < -1.3) {
-            bashkaRef.current.position.y = bashkaRef.current.position.y + 0.02;
-            bashkaRef.current.rotation.y =
-                bashkaRef.current.rotation.y + Math.PI / 33;
-        }
-        if (snap.rotatingCircleClicked && bashkaRef.current.position.y < -0.5) {
-            bashkaRef.current.position.y = bashkaRef.current.position.y + 0.04;
-            bashkaRef.current.position.x = bashkaRef.current.position.x + 0.02;
-            bashkaRef.current.scale.x = bashkaRef.current.scale.x + 0.015;
-            bashkaRef.current.scale.y = bashkaRef.current.scale.y + 0.015;
-            bashkaRef.current.scale.z = bashkaRef.current.scale.z + 0.015;
-        }
-    });
-    // let scaleXX = 1;
-    // useEffect(() => {
-    //     if (snap.rotatingCircleClicked) {
-    //         gsap.to(bashkaRef.current, {
-    //             scaleXX: '2',
-    //             duration: '2',
-    //             ease: 'easeOut',
-    //         });
-    //     }
-    //     console.log(bashkaRef.current);
-    // }, [snap.rotatingCircleClicked]);
+    const [bashkaSpring, setBashkaSpring] = useSpring<BashkaSpring>(() => ({
+        x: 0.7,
+        y: -4,
+        z: 0,
+        rotationx: 0,
+        rotationy: 0,
+        rotationz: 0,
+        scalex: 1,
+        scaley: 1,
+        scalez: 1,
+        config: config.molasses,
+    }));
+
+    useEffect(() => {
+        setBashkaSpring({
+            y: lerp(-2, 0.5, 0.25),
+            rotationy: lerp(0, 24, 0.5),
+        });
+    }, [window.onload]);
 
     const texture = new THREE.TextureLoader().load(textureImage);
     const normal = new THREE.TextureLoader().load(normalImage);
@@ -65,38 +74,64 @@ const Bashka = () => {
     const [pos, setPos] = useState({ x: 0, y: 0 });
     document.addEventListener('mousemove', (e) => {
         setPos((prevState) => ({
-            x: e.x - prevState.x,
-            y: e.y - prevState.y,
+            x: e.pageX,
+            y: e.pageY,
         }));
     });
 
-    useEffect(() => {
-        if (pos.x <= 35 && pos.y <= 20) {
-            // console.log(pos);
-        }
+    const settingRotationFunc = () => {
+        setBashkaSpring({
+            rotationy: lerp(5, pos.x / 20, 0.02),
+            rotationx: lerp(-0.7, pos.y / 20, 0.03),
+            // rotationy: lerp(0, pos.y / 100 / Math.PI, 0.5),
+        });
+    };
 
-        return () => {};
+    const all = _.throttle(settingRotationFunc, 2000);
+
+    useEffect(() => {
+        all();
     }, [pos.x, pos.y]);
 
-    // console.log(pos);
+    useEffect(() => {
+        if (snap.rotatingCircleClicked) {
+            setBashkaSpring({
+                scalex: lerp(1, 1.7, 0.5),
+                scaley: lerp(1, 1.7, 0.5),
+                scalez: lerp(1, 1.7, 0.5),
+                y: lerp(-1, 0, 0.5),
+                x: lerp(1, 2, 0.5),
+            });
+        }
+    }, [snap.rotatingCircleClicked]);
+
+    console.log(pos);
 
     return (
-        <group
+        <a.group
             ref={bashkaRef}
-            position={[0.7, -4, 0]}
+            // position={[bashkaSpring.x, bashkaSpring.y, bashkaSpring.z]}
+            position-x={bashkaSpring.x}
+            position-y={bashkaSpring.y}
+            position-z={bashkaSpring.z}
             // rotation={[
             //     (pos.y * Math.PI) / 30 + Math.PI * 2,
             //     (pos.x * Math.PI) / 30 + Math.PI * 2,
             //     0,
             // ]}
-            rotation={[0, -Math.PI / 5, 0]}
-            scale={[1, 1, 1]}
+            // rotation={[0, -Math.PI / 5, 0]}
+            rotation-x={bashkaSpring.rotationx}
+            rotation-y={bashkaSpring.rotationy}
+            rotation-z={bashkaSpring.rotationz}
+            scale-x={bashkaSpring.scalex}
+            scale-y={bashkaSpring.scaley}
+            scale-z={bashkaSpring.scalez}
         >
             {nodes.Scene.children.map((child) => (
                 //@ts-ignore
                 <mesh geometry={child.geometry} material={material}></mesh>
             ))}
-        </group>
+        </a.group>
     );
 };
 
