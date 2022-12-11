@@ -1,0 +1,22 @@
+@import '../../styles/variables.scss';
+
+.path {
+    position: absolute;
+    top: (100vh/8);
+    left: (100vh/8 * 2.5);
+    width: 500px;
+    height: 500px;
+    border: 2px solid $white;
+    border-radius: 500px;
+}
+
+.handle {
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    background-color: $white;
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    // z-index: 1001;
+}

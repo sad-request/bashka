@@ -8,6 +8,8 @@ import Cursor from '../Cursor/Cursor';
 import { useSnapshot } from 'valtio';
 import state from '../../../state';
 import RotatingItem from '../RotatingText/RotatingItem';
+import CircleHandle from '../../CircleHandle/CircleHandle';
+import Draggable from 'gsap/Draggable';
 
 const AllInterface = () => {
     const rotationAnim = useRef(null);
@@ -16,6 +18,7 @@ const AllInterface = () => {
     const linkProjectAnim = useRef(null);
     const textAnim = useRef(null);
     const rotationItemAnim = useRef(null);
+    const rotationCircleHandle = useRef(null);
 
     const snap = useSnapshot(state);
 
@@ -108,6 +111,12 @@ const AllInterface = () => {
         }
     }, [snap.rotatingCircleClicked]);
 
+    // gsap.registerPlugin(Draggable);
+    // Draggable.create(rotationCircleHandle.current, {
+    //     type: 'rotation',
+    //     inertia: true,
+    // });
+
     return (
         <div className={s.main_grid}>
             <div className={s.content_block}>
@@ -139,6 +148,9 @@ const AllInterface = () => {
             </div>
             <div className={s.rotationItem} ref={rotationItemAnim}>
                 <RotatingItem />
+            </div>
+            <div className={s.circleHandle} ref={rotationCircleHandle}>
+                <CircleHandle />
             </div>
         </div>
     );

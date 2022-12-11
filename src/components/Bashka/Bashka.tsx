@@ -105,7 +105,7 @@ const Bashka = () => {
         }
     }, [snap.rotatingCircleClicked]);
 
-    console.log(pos);
+    // console.log(pos);
 
     return (
         <a.group
