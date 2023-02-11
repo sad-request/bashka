@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/bashka/static/css/main.3e028d64.css",
+    "main.js": "/bashka/static/js/main.47287a45.js",
+    "static/media/NormalMap.png": "/bashka/static/media/NormalMap.1508ef66dcf7c5a02856.png",
+    "static/media/bashka.gltf": "/bashka/static/media/bashka.2df05c26a9d10bdc2ca2.gltf",
+    "static/media/rock-basecolor.png": "/bashka/static/media/rock-basecolor.e32bbe87b964787ee0bb.png",
+    "static/media/chooseCardCircle.svg": "/bashka/static/media/chooseCardCircle.e81f8eb9b8c3a4b69223e4c84003e15d.svg",
+    "static/media/Tupo-Vyaz_VF.ttf": "/bashka/static/media/Tupo-Vyaz_VF.fbec267b24ea80e54dfb.ttf",
+    "static/media/Tupo-Vyaz_Thin.ttf": "/bashka/static/media/Tupo-Vyaz_Thin.34c4fe1b52984df38d65.ttf",
+    "static/media/Tupo-Vyaz_Regular.ttf": "/bashka/static/media/Tupo-Vyaz_Regular.b40a18a95533e9b17539.ttf",
+    "static/media/Tupo-Vyaz_Bold.ttf": "/bashka/static/media/Tupo-Vyaz_Bold.1c34d281d61af35be9df.ttf",
+    "static/media/rotatingText.svg": "/bashka/static/media/rotatingText.52edd98894769d9bf703e627528f06a0.svg",
+    "static/media/logoBashka.svg": "/bashka/static/media/logoBashka.a88510254f981bb7142fbb05afcdd1c6.svg",
+    "index.html": "/bashka/index.html",
+    "main.3e028d64.css.map": "/bashka/static/css/main.3e028d64.css.map",
+    "main.47287a45.js.map": "/bashka/static/js/main.47287a45.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3e028d64.css",
+    "static/js/main.47287a45.js"
+  ]
+}
